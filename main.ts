@@ -22,12 +22,20 @@ basic.forever(function () {
             for (let Index = 0; Index <= 4; Index++) {
                 led.plot(4, Index)
             }
+            // LEDS einschalten
+            pins.digitalWritePin(DigitalPin.P0, 1)
         } else if (!(input.pinIsPressed(TouchPin.P3))) {
             for (let Index = 0; Index <= 4; Index++) {
                 led.plot(4, Index)
             }
+            // LEDS auschalten
+            pins.digitalWritePin(DigitalPin.P0, 0)
         } else {
-        	
+            for (let Index = 0; Index <= 4; Index++) {
+                led.unplot(4, Index)
+            }
+            // LEDS auschalten
+            pins.digitalWritePin(DigitalPin.P0, 0)
         }
     } else if (input.pinIsPressed(TouchPin.P1) && !(input.buttonIsPressed(Button.B))) {
         // Falls LIcht unter den Grenzwert
@@ -39,6 +47,8 @@ basic.forever(function () {
             for (let Index = 0; Index <= SensorWert; Index++) {
                 led.plot(0, Index)
             }
+            // LEDS einschalten
+            pins.digitalWritePin(DigitalPin.P0, 1)
         } else {
             basic.clearScreen()
             basic.setLedColor(basic.rgb(25, 25, 0))
@@ -47,6 +57,8 @@ basic.forever(function () {
             for (let Index = 0; Index <= SensorWert; Index++) {
                 led.plot(0, Index)
             }
+            // LEDS auschalten
+            pins.digitalWritePin(DigitalPin.P0, 0)
         }
     } else if (!(input.pinIsPressed(TouchPin.P1)) && input.buttonIsPressed(Button.B)) {
         // Falls PIR Aktiviert
@@ -56,16 +68,23 @@ basic.forever(function () {
             for (let Index = 0; Index <= 4; Index++) {
                 led.plot(4, Index)
             }
+            // LEDS einschalten
+            pins.digitalWritePin(DigitalPin.P0, 1)
         } else {
             basic.clearScreen()
             basic.setLedColor(basic.rgb(0, 0, 25))
             for (let Index = 0; Index <= 4; Index++) {
                 led.unplot(4, Index)
             }
+            // LEDS auschalten
+            pins.digitalWritePin(DigitalPin.P0, 0)
         }
     } else {
         basic.clearScreen()
-        basic.showIcon(IconNames.Happy)
+        basic.setLedColor(basic.rgb(0, 0, 0))
+        basic.showIcon(IconNames.No)
+        // LEDS auschalten
+        pins.digitalWritePin(DigitalPin.P0, 0)
     }
     control.waitMicros(100000)
 })
